@@ -31,7 +31,7 @@ const schemaJson = {
             "position"
         ],
     }
-}
+};
 
 const congifCsv = {
     headers: [
@@ -56,37 +56,36 @@ const congifCsv = {
             required: false
         }
     ]
-}
+};
 
 function inputFileValidation(filePath) {
-    let fileFormat = path.extname(filePath)
+    let fileFormat = path.extname(filePath);
 
     if (fileFormat == '.json') {
         return jsonValidation(filePath)
-    }
+    };
     if (fileFormat == '.csv') {
         return csvValidation(filePath)
-    }
+    };
 }
 
 
 function jsonValidation(filePath) {
-    const currentFile = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-    const validate = ajv.compile(schemaJson)
-    const valid = validate(currentFile)
+    const currentFile = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const validate = ajv.compile(schemaJson);
+    const valid = validate(currentFile);
 
     if (!valid) {
-        throw Error(`Validation error for json schema : ${validate.errors[0].message}`)
+        throw Error(`Validation error for json schema : ${validate.errors[0].message}`);
     } else {
         return true
-    }
-
+    };
 }
 
 async function csvValidation(file) {
-    const csvfile = fs.readFileSync(file, 'utf-8')
+    const csvfile = fs.readFileSync(file, 'utf-8');
 
-    const validationResult = await csvValidator(csvfile, congifCsv)
+    const validationResult = await csvValidator(csvfile, congifCsv);
     let isValidFile = validationResult.inValidMessages.length == 0
 
     if (isValidFile) {
@@ -94,8 +93,8 @@ async function csvValidation(file) {
     } else {
         throw Error(`ERROR Ivalid CSV file : ${validationResult.inValidMessages}`);
     }
-}
+};
 
 module.exports = {
     inputFileValidation
-}
+};

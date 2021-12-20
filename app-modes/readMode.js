@@ -1,7 +1,7 @@
 const fs = require('fs');
 const parser = require('fast-csv');
 const path = require('path');
-const fileParser = require('../configuration/file-data-pareser')
+const fileParser = require('../configuration/file-data-pareser');
 
 async function READ(inputFilePath, ouptupFilePath) {
     const extNameInputFile = path.extname(inputFilePath);
@@ -13,42 +13,43 @@ async function READ(inputFilePath, ouptupFilePath) {
                 .pipe(parser.parse({ headers: true }))
                 .on('error', error => console.error(error))
                 .on('data', row => results.push(row))
-                .on('end', () => resolve(results))
-        })
-        let sortedInputFile = fileParser.getOldestPerson(inputFile)
-        fileParser.getPopularLastName(sortedInputFile)
-        createOuptuFile(sortedInputFile, extNameInputFile, ouptupFilePath)
+                .on('end', () => resolve(results));
+        });
+        let sortedInputFile = fileParser.getOldestPerson(inputFile);
+        fileParser.getPopularLastName(sortedInputFile);
+        createOuptuFile(sortedInputFile, extNameInputFile, ouptupFilePath);
     }
 
     if (extNameInputFile == '.json') {
         const inputFile = JSON.parse(fs.readFileSync(inputFilePath, 'utf-8'));
-        let sortedInputFile = fileParser.getOldestPerson(inputFile)
-        fileParser.getPopularLastName(sortedInputFile)
-        createOuptuFile(sortedInputFile, extNameInputFile, ouptupFilePath)
+        let sortedInputFile = fileParser.getOldestPerson(inputFile);
+        fileParser.getPopularLastName(sortedInputFile);
+        createOuptuFile(sortedInputFile, extNameInputFile, ouptupFilePath);
     }
 };
 
 function createOuptuFile(sortedData, inputExtName, outPutFile) {
-    let outFilePath = (outPutFile) ? path.extname(outPutFile) : null
+    let outFilePath = (outPutFile) ? path.extname(outPutFile) : null;
     if (outFilePath == '.csv') {
-        let writeStream = fs.createWriteStream(`./${outPutFile}`)
+        let writeStream = fs.createWriteStream(`./${outPutFile}`);
         parser.write(sortedData, { headers: true })
             .pipe(writeStream);
-    }
+    };
+
     if (outFilePath == '.json') {
-        let data = JSON.stringify(sortedData, null, 2)
-        let writeStream = fs.createWriteStream(`./${outPutFile}`)
-        writeStream.write(data, 'utf-8')
+        let data = JSON.stringify(sortedData, null, 2);
+        let writeStream = fs.createWriteStream(`./${outPutFile}`);
+        writeStream.write(data, 'utf-8');
     }
     if (!outFilePath && inputExtName == '.csv') {
-        let writeStream = fs.createWriteStream(`./output-file.csv`)
+        let writeStream = fs.createWriteStream(`./output-file.csv`);
         parser.write(sortedData, { headers: true })
             .pipe(writeStream);
     }
     if (!outFilePath && inputExtName == '.json') {
-        let data = JSON.stringify(sortedData, null, 2)
-        let writeStream = fs.createWriteStream(`./output-file.json`)
-        writeStream.write(data, 'utf-8')
+        let data = JSON.stringify(sortedData, null, 2);
+        let writeStream = fs.createWriteStream(`./output-file.json`);
+        writeStream.write(data, 'utf-8');
     }
 }
 module.exports = {

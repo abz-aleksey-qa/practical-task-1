@@ -29,4 +29,4 @@ function getPopularLastName(array) {
 module.exports = {
     getOldestPerson,
     getPopularLastName
-}
+};
