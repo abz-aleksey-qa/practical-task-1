@@ -4,7 +4,8 @@
   "description": "First task for IPR",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./tests/",
+    "read": "node ./app.js --input ./input-files/qa_valid.csv --output ./output-files/output-generate.csv"
   },
   "author": "QA Aleksey M",
   "license": "ISC",
@@ -13,6 +14,7 @@
     "commander": "^8.3.0",
     "csv-file-validator": "^1.12.0",
     "faker": "^5.5.3",
-    "fast-csv": "^4.3.6"
+    "fast-csv": "^4.3.6",
+    "mocha": "^9.1.3"
   }
 }

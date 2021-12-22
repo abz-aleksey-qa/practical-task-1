@@ -1,12 +1,9 @@
-const commander = require('commander');
-const fs = require('fs')
 const mode = {
     MODE_READ: 1,
     MODE_GENERATE: 2,
 };
 
 function getArguments(arguments) {
-    console.log(arguments);
     let count, outFile, inputFile;
 
     if ('count' in arguments) {
@@ -26,7 +23,7 @@ function getArguments(arguments) {
 
 function detectMode(inputFile, ouputFile, counter) {
     if (inputFile && counter) {
-        throw Error('Invalid mode. Check --help')
+        console.error('ERROR : Invalid mode. Check --help')
     };
     if (inputFile && ouputFile || (inputFile)) {
         return mode.MODE_READ
@@ -40,21 +37,25 @@ function validationInputFile(inputFile) {
     let inputFormat = inputFile.match(/\.[0-9a-z]{1,5}$/gm);
     if (inputFormat == '.json' || inputFormat == '.csv') {
         return true
-    } else { throw Error('ERROR Format of input file must be .json or .csv') };
+    } else {
+        console.error('ERROR : Format of input file must be .json or .csv');
+    };
 };
 
 function validationOutPutFile(outputFile) {
     let outputFormat = outputFile.match(/\.[0-9a-z]{1,5}$/gm);
     if (outputFormat == '.json' || outputFormat == '.csv') {
         return true
-    } else { throw Error('ERROR Format of output file must be .json or .csv') };
+    } else {
+        console.error('ERROR : Format of output file must be .json or .csv')
+    };
 };
 
 function validationCounterArgument(counter) {
     if (!isNaN(counter) && +counter !== 0) {
         return true
     } else {
-        throw Error('Counter type must be a number and more then 0!');
+        console.error('ERROR : Counter type must be a number and more then 0!');
     }
 };
 

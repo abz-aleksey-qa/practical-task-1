@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Vsevolod Lead",
+    "position": "QA",
+    "age": 28,
+    "phone": "+380507823123"
+  },
+  {
+    "name": "Denis Lead",
+    "position": "Programmer",
+    "age": 27,
+    "phone": "+38095723813"
+  },
+  {
+    "name": "Kirill Back",
+    "position": "CEO",
+    "age": 24,
+    "phone": "+380507898155"
+  },
+  {
+    "name": "Aleksey Loh",
+    "position": "Desinger",
+    "age": 23,
+    "phone": "+380507898123"
+  }
+]

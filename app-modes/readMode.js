@@ -1,7 +1,7 @@
 const fs = require('fs');
 const parser = require('fast-csv');
 const path = require('path');
-const fileParser = require('../configuration/file-data-pareser');
+const fileParser = require('../utils/file-data-pareser');
 
 async function READ(inputFilePath, ouptupFilePath) {
     const extNameInputFile = path.extname(inputFilePath);
@@ -15,14 +15,16 @@ async function READ(inputFilePath, ouptupFilePath) {
                 .on('data', row => results.push(row))
                 .on('end', () => resolve(results));
         });
-        let sortedInputFile = fileParser.getOldestPerson(inputFile);
+        let sortedInputFile = fileParser.sortFileData(inputFile);
+        fileParser.getOldestUser(sortedInputFile)
         fileParser.getPopularLastName(sortedInputFile);
         createOuptuFile(sortedInputFile, extNameInputFile, ouptupFilePath);
     }
 
     if (extNameInputFile == '.json') {
         const inputFile = JSON.parse(fs.readFileSync(inputFilePath, 'utf-8'));
-        let sortedInputFile = fileParser.getOldestPerson(inputFile);
+        let sortedInputFile = fileParser.sortFileData(inputFile);
+        fileParser.getOldestUser(sortedInputFile)
         fileParser.getPopularLastName(sortedInputFile);
         createOuptuFile(sortedInputFile, extNameInputFile, ouptupFilePath);
     }
@@ -38,17 +40,17 @@ function createOuptuFile(sortedData, inputExtName, outPutFile) {
 
     if (outFilePath == '.json') {
         let data = JSON.stringify(sortedData, null, 2);
-        let writeStream = fs.createWriteStream(`./${outPutFile}`);
+        let writeStream = fs.createWriteStream(`${outPutFile}`);
         writeStream.write(data, 'utf-8');
     }
     if (!outFilePath && inputExtName == '.csv') {
-        let writeStream = fs.createWriteStream(`./output-file.csv`);
+        let writeStream = fs.createWriteStream(`./output-files/output-file.csv`);
         parser.write(sortedData, { headers: true })
             .pipe(writeStream);
     }
     if (!outFilePath && inputExtName == '.json') {
         let data = JSON.stringify(sortedData, null, 2);
-        let writeStream = fs.createWriteStream(`./output-file.json`);
+        let writeStream = fs.createWriteStream(`./output-files/output-file.json`);
         writeStream.write(data, 'utf-8');
     }
 }

@@ -76,7 +76,7 @@ function jsonValidation(filePath) {
     const valid = validate(currentFile);
 
     if (!valid) {
-        throw Error(`Validation error for json schema : ${validate.errors[0].message}`);
+        console.error(`ERROR : Validation error for json schema : ${validate.errors[0].message}`)
     } else {
         return true
     };
@@ -91,7 +91,7 @@ async function csvValidation(file) {
     if (isValidFile) {
         return true
     } else {
-        throw Error(`ERROR Ivalid CSV file : ${validationResult.inValidMessages}`);
+        console.error(`ERROR : Ivalid CSV file : ${validationResult.inValidMessages}`)
     }
 };
 
