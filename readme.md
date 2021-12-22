@@ -9,6 +9,7 @@ Console utility for parsing json and csv files. Utility can work in two mode "Re
 - Output in console name of the most oldest employee
 - Output in console most pipular last name with counter 
 - Create output file in the specified format (json or csv)
+- E2E tests for main logic of utility 
 
 ## CLI parameters
 
@@ -23,4 +24,27 @@ Console utility for parsing json and csv files. Utility can work in two mode "Re
 
 1. json - https://scr.abz.agency/xQuz4XqO
 2. csv - https://scr.abz.agency/P8u604Qj
+
+## Run utility (examples)
+
+> Note:  Output files saved in folde `output-files`
+
+Read mode : 
+
+```sh
+npm run read
+```
+
+Read mode : 
+
+```sh
+npm run generate
+```
+
+## Run tests (examples)
+
+```sh
+npm run test
+```
+
 
