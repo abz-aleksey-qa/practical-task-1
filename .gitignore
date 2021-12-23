@@ -1,2 +1,3 @@
 /node_modules
+/test-changes.js
 *.DS_Store
