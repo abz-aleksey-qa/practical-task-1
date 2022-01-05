@@ -1,35 +1,25 @@
-const arguments = require('commander');
-const CLI_VALIDATOR = require('./utils/cliValidation');
-const FILE_VALIDATOR = require('./utils/fileValidation');
-const readMode = require('./app-modes/readMode');
-const generateMode = require('./app-modes/generateMode');
-const directory = require('./utils/remove-files');
-
-arguments
-    .option('-i, --input <path>', 'The path for input file is in json or csv format. Used for Read Mode.')
-    .option('-c, --count <number>', 'The number of lines of the output file, the default value is 10. Used for Generate Mode. ')
-    .option('-o, --output <fileName>', 'The name of the output file is in json or csv format. Dedault format for output file - json. Can be use for Read Mode and Generate Mode');
-
-directory.removeFiles('./output-files/');
-
-let inputArguments = arguments.parse(process.argv);
-
-let inputArgumentsOptions = inputArguments.opts();
-
-const mode = CLI_VALIDATOR.getArguments(inputArgumentsOptions);
-
+const cli = require('./src/cli-module/cli-parser')
+const cliValidator = require('./src/cli-module/cli-validation');
+const fileValidator = require('./src/utils/file-validation');
+const readMode = require('./src/app-modes/read-mode');
+const generateMode = require('./src/app-modes/generate-mode');
+const directory = require('./src/utils/remove-files');
 
 async function detectMode() {
 
+    directory.removeFiles('./output-files/');
+
+    const inputArgumentsOptions = cli.parserInputCliData(process.argv)
+    const mode = cliValidator.getArguments(inputArgumentsOptions);
     switch (mode) {
-        case 1:
-            console.log(`Read Mode`);
-            await FILE_VALIDATOR.inputFileValidation(inputArgumentsOptions.input);
-            let filterDataReadMode = await readMode.READ(inputArgumentsOptions.input, inputArgumentsOptions.output);
+        case cliValidator.mode.MODE_READ:
+            console.log(mode);
+            await fileValidator.inputFileValidation(inputArgumentsOptions.input);
+            await readMode.READ(inputArgumentsOptions.input, inputArgumentsOptions.output);
             break
-        case 2:
-            console.log(`Generate Mode`);
-            let filterDataGenMode = await generateMode.generate(inputArgumentsOptions.count, inputArgumentsOptions.output);
+        case cliValidator.mode.MODE_GENERATE:
+            console.log(mode);
+            await generateMode.generate(inputArgumentsOptions.count, inputArgumentsOptions.output);
             break
     }
 };

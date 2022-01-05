@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Kyler Lemke",
+    "posistion": "Designer",
+    "age": 50,
+    "phone": "+38039117304"
+  },
+  {
+    "name": "Citlalli Medhurst",
+    "posistion": "QA",
+    "age": 36,
+    "phone": "+38061245616"
+  },
+  {
+    "name": "Graciela Bosco",
+    "posistion": "Programmer",
+    "age": 32,
+    "phone": "+38093352178"
+  },
+  {
+    "name": "Tamara Beier",
+    "posistion": "Buisness Developer",
+    "age": 30,
+    "phone": "+38055192084"
+  },
+  {
+    "name": "Tania Rau",
+    "posistion": "Ceo",
+    "age": 28,
+    "phone": "+38074895268"
+  },
+  {
+    "name": "Brielle Nader",
+    "posistion": "Programmer",
+    "age": 27,
+    "phone": "+38012342561"
+  },
+  {
+    "name": "Delilah Schinner",
+    "posistion": "Lead Dev",
+    "age": 24,
+    "phone": "+38067161152"
+  },
+  {
+    "name": "Nels Barton",
+    "posistion": "Programmer",
+    "age": 20,
+    "phone": "+38086811015"
+  },
+  {
+    "name": "Estrella Fahey",
+    "posistion": "Programmer",
+    "age": 20,
+    "phone": "+38017703094"
+  },
+  {
+    "name": "Caleb Turner",
+    "posistion": "Lead Dev",
+    "age": 19,
+    "phone": "+38058150060"
+  }
+]

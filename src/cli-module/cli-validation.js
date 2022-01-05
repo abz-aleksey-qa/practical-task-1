@@ -1,6 +1,6 @@
 const mode = {
-    MODE_READ: 1,
-    MODE_GENERATE: 2,
+    MODE_READ: 'Read Mode',
+    MODE_GENERATE: 'Generate Mode',
 };
 
 function getArguments(arguments) {

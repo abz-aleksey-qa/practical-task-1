@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha ./tests/",
-    "read": "node ./app.js --input ./input-files/qa_valid.csv --output ./output-files/output-generate.csv",
-    "generate": "node ./app.js --count 10 --output ./output-files/output-generate.csv"
+    "app": "node ./app.js"
   },
   "author": "QA Aleksey M",
   "license": "ISC",

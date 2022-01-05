@@ -2,7 +2,7 @@ const assert = require('assert');
 const util = require('util');
 const execFile = util.promisify(require('child_process').exec);
 const testData = require('./test-data/test-data');
-const directory = require('../utils/remove-files');
+const directory = require('../src/utils/remove-files');
 
 describe('TS №1 : Cli Validation', async function () {
     this.timeout(5000);

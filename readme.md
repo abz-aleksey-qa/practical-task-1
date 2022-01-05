@@ -7,9 +7,17 @@ Console utility for parsing json and csv files. Utility can work in two mode "Re
 - Parse input file in csv or json format (Read mode)
 - Create random data in the specified amount (Generate mode)
 - Output in console name of the most oldest employee
-- Output in console most pipular last name with counter 
+- Output in console most popular last name with counter 
 - Create output file in the specified format (json or csv)
 - E2E tests for main logic of utility 
+
+
+
+
+## Installing
+```sh
+npm install
+```
 
 ## CLI parameters
 
@@ -32,13 +40,13 @@ Console utility for parsing json and csv files. Utility can work in two mode "Re
 Read mode : 
 
 ```sh
-npm run read
+npm run app -- --input /path/to/input/file.json --output /path/to/output/file.json
 ```
 
 Read mode : 
 
 ```sh
-npm run generate
+npm run app -- --count 20 --output /path/to/output/file.json
 ```
 
 ## Run tests (examples)
