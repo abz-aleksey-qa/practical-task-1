@@ -28,6 +28,7 @@ npm install
 | --output | -o  | Name for output file. If this parameter not specified, in Read Mode the file format is substituted from the input file. If in Generate Mode do not specify this parameter, dedault parametr will be json. 
 | --help | -h | Display info for CLI parameters.
 
+By default without any CLI parameters, utility work in generate node with default value in counter.
 ## Example valid files
 
 1. json - https://scr.abz.agency/xQuz4XqO

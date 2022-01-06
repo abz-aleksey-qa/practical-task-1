@@ -16,11 +16,11 @@ async function detectMode() {
             console.log(mode);
             await fileValidator.inputFileValidation(inputArgumentsOptions.input);
             await readMode.READ(inputArgumentsOptions.input, inputArgumentsOptions.output);
-            break
+            break;
         case cliValidator.mode.MODE_GENERATE:
             console.log(mode);
             await generateMode.generate(inputArgumentsOptions.count, inputArgumentsOptions.output);
-            break
+            break;
     }
 };
 

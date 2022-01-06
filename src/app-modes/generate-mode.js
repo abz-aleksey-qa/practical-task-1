@@ -27,12 +27,12 @@ async function generate(inputArgs, oupturArgs) {
     if (!outputPath) {
         const createGenerateFile = fs.createWriteStream(`./output-files/generate-mode-ouput.json`);
         createGenerateFile.write(JSON.stringify(result, null, 2));
-    };
+    }
 
     if (outputPath == '.json') {
         const createGenerateFile = fs.createWriteStream(`${oupturArgs}`);
         createGenerateFile.write(JSON.stringify(result, null, 2));
-    };
+    }
 
     if (outputPath == '.csv') {
         let writeStream = fs.createWriteStream(`${oupturArgs}`);

@@ -1,3 +1,6 @@
+const { throws } = require('assert');
+const path = require('path');
+
 const mode = {
     MODE_READ: 'Read Mode',
     MODE_GENERATE: 'Generate Mode',
@@ -8,47 +11,81 @@ function getArguments(arguments) {
 
     if ('count' in arguments) {
         count = validationCounterArgument(arguments.count)
-    };
+    }
     if ('input' in arguments) {
         inputFile = validationInputFile(arguments.input)
-    };
+    }
     if ('output' in arguments) {
         outFile = validationOutPutFile(arguments.output)
     };
-    if (Object.keys(arguments).length == 0) {
-        return mode.MODE_GENERATE
-    };
+
     return detectMode(inputFile, outFile, count)
 }
 
 function detectMode(inputFile, ouputFile, counter) {
-    if (inputFile && counter) {
-        console.error('ERROR : Invalid mode. Check --help')
-    };
-    if (inputFile && ouputFile || (inputFile)) {
+
+    // console.log(inputFile, ouputFile, counter);
+
+    // Если есть инпут и отпут или просто инпут - READ MODE
+    // Если есть коунтер и отпут или просто каунтер - GENERATE MODE
+    // Если только отпут параметр то это - ОШИБКА
+
+
+    if ((inputFile && ouputFile) || (inputFile && !counter)) {
+        console.log('Case 1');
         return mode.MODE_READ
-    };
-    if (ouputFile && counter || counter) {
+    }
+
+    if ((counter && ouputFile) || (counter && !inputFile)) {
+        console.log('Case 2');
         return mode.MODE_GENERATE
-    };
+    }
+
+    if (counter && inputFile) {
+        console.log('Case 4');
+        throw Error('ERROR : Invalid mode. Check --help')
+    }
+
+    console.log('Case3');
+    return mode.MODE_GENERATE
+
+
+
+    // if ((inputFile && counter) || (!inputFile || !counter && counter)) {
+    //     console.error('ERROR : Invalid mode. Check --help')
+    // }
+
+    // if ((inputFile && ouputFile) || inputFile) {
+    //     return mode.MODE_READ
+    // }
+    // if ((ouputFile && counter) || counter) {
+    //     return mode.MODE_GENERATE
+    // }
+
+    // let testing = (inputFile && counter) || (!inputFile || !counter && counter)
+    // console.log(testing);
+
+
+
+    return console.log(111111);
 }
 
 function validationInputFile(inputFile) {
-    let inputFormat = inputFile.match(/\.[0-9a-z]{1,5}$/gm);
-    if (inputFormat == '.json' || inputFormat == '.csv') {
+    let inputFormat = path.extname(inputFile);
+    if (inputFormat === '.json' || inputFormat === '.csv') {
         return true
     } else {
         console.error('ERROR : Format of input file must be .json or .csv');
-    };
+    }
 };
 
 function validationOutPutFile(outputFile) {
-    let outputFormat = outputFile.match(/\.[0-9a-z]{1,5}$/gm);
-    if (outputFormat == '.json' || outputFormat == '.csv') {
+    let outputFormat = path.extname(outputFile);
+    if (outputFormat === '.json' || outputFormat === '.csv') {
         return true
     } else {
         console.error('ERROR : Format of output file must be .json or .csv')
-    };
+    }
 };
 
 function validationCounterArgument(counter) {
