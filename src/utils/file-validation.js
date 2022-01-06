@@ -4,8 +4,6 @@ const Ajv = require("ajv")
 const ajv = new Ajv()
 const path = require('path');
 
-
-
 const schemaJson = {
     "type": "array",
     "items": {
@@ -59,14 +57,19 @@ const congifCsv = {
 };
 
 function inputFileValidation(filePath) {
-    let fileFormat = path.extname(filePath);
 
-    if (fileFormat == '.json') {
-        return jsonValidation(filePath)
-    };
-    if (fileFormat == '.csv') {
-        return csvValidation(filePath)
-    };
+    try {
+        let fileFormat = path.extname(filePath);
+
+        if (fileFormat === '.json') {
+            return jsonValidation(filePath)
+        }
+        if (fileFormat === '.csv') {
+            return csvValidation(filePath)
+        }
+    } catch (error) {
+        throw error
+    }
 }
 
 
@@ -75,23 +78,24 @@ function jsonValidation(filePath) {
     const validate = ajv.compile(schemaJson);
     const valid = validate(currentFile);
 
-    if (!valid) {
-        console.error(`ERROR : Validation error for json schema : ${validate.errors[0].message}`)
-    } else {
+    if (valid) {
         return true
-    };
+    } else {
+        throw Error(`ERROR : Validation error for json schema : ${validate.errors[0].message}`);
+
+    }
 }
 
 async function csvValidation(file) {
     const csvfile = fs.readFileSync(file, 'utf-8');
 
     const validationResult = await csvValidator(csvfile, congifCsv);
-    let isValidFile = validationResult.inValidMessages.length == 0
+    let isValidFile = validationResult.inValidMessages.length === 0
 
     if (isValidFile) {
         return true
     } else {
-        console.error(`ERROR : Ivalid CSV file : ${validationResult.inValidMessages}`)
+        throw Error(`ERROR : Ivalid CSV file : ${validationResult.inValidMessages}`);
     }
 };
 

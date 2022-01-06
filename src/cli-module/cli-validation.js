@@ -24,50 +24,19 @@ function getArguments(arguments) {
 
 function detectMode(inputFile, ouputFile, counter) {
 
-    // console.log(inputFile, ouputFile, counter);
-
-    // Если есть инпут и отпут или просто инпут - READ MODE
-    // Если есть коунтер и отпут или просто каунтер - GENERATE MODE
-    // Если только отпут параметр то это - ОШИБКА
-
-
     if ((inputFile && ouputFile) || (inputFile && !counter)) {
-        console.log('Case 1');
         return mode.MODE_READ
     }
 
     if ((counter && ouputFile) || (counter && !inputFile)) {
-        console.log('Case 2');
         return mode.MODE_GENERATE
     }
 
     if (counter && inputFile) {
-        console.log('Case 4');
         throw Error('ERROR : Invalid mode. Check --help')
     }
 
-    console.log('Case3');
-    return mode.MODE_GENERATE
-
-
-
-    // if ((inputFile && counter) || (!inputFile || !counter && counter)) {
-    //     console.error('ERROR : Invalid mode. Check --help')
-    // }
-
-    // if ((inputFile && ouputFile) || inputFile) {
-    //     return mode.MODE_READ
-    // }
-    // if ((ouputFile && counter) || counter) {
-    //     return mode.MODE_GENERATE
-    // }
-
-    // let testing = (inputFile && counter) || (!inputFile || !counter && counter)
-    // console.log(testing);
-
-
-
-    return console.log(111111);
+    return mode.MODE_GENERATE;
 }
 
 function validationInputFile(inputFile) {
@@ -75,7 +44,7 @@ function validationInputFile(inputFile) {
     if (inputFormat === '.json' || inputFormat === '.csv') {
         return true
     } else {
-        console.error('ERROR : Format of input file must be .json or .csv');
+        throw Error('ERROR : Format of input file must be .json or .csv')
     }
 };
 
@@ -84,7 +53,7 @@ function validationOutPutFile(outputFile) {
     if (outputFormat === '.json' || outputFormat === '.csv') {
         return true
     } else {
-        console.error('ERROR : Format of output file must be .json or .csv')
+        throw Error('ERROR : Format of output file must be .json or .csv')
     }
 };
 
@@ -92,7 +61,7 @@ function validationCounterArgument(counter) {
     if (!isNaN(counter) && +counter !== 0) {
         return true
     } else {
-        console.error('ERROR : Counter type must be a number and more then 0!');
+        throw Error('ERROR : Counter type must be a number and more then 0!')
     }
 };
 
