@@ -9,7 +9,7 @@ describe('TS №1 : Cli Validation', async function () {
 
     before(function () {
         directory.removeFiles('./tests/output-test-artifacts/');
-        directory.removeFiles('./output-files/');
+        directory.removeFiles('../src/output-files');
     });
 
     it('TC №1.1 : Read mode with --input and --output parameter [JSON]', async function () {
