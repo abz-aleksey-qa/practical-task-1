@@ -1,8 +1,8 @@
 const cli = require('./src/cli-module/cli-parser')
 const cliValidator = require('./src/cli-module/cli-validation');
-const fileValidator = require('./src/utils/file-validation');
-const readMode = require('./src/app-modes/read-mode');
-const generateMode = require('./src/app-modes/generate-mode');
+const fileValidator = require('./src/file-module/input-file-validation');
+const readMode = require('./src/file-module/input-file-parser');
+const generateMode = require('./src/data-generator');
 const directory = require('./src/utils/remove-files');
 
 async function detectMode() {
@@ -15,11 +15,11 @@ async function detectMode() {
         case cliValidator.mode.MODE_READ:
             console.log(mode);
             await fileValidator.inputFileValidation(inputArgumentsOptions.input);
-            await readMode.READ(inputArgumentsOptions.input, inputArgumentsOptions.output);
+            await readMode.inputFilePareser(inputArgumentsOptions.input, inputArgumentsOptions.output);
             break;
         case cliValidator.mode.MODE_GENERATE:
             console.log(mode);
-            await generateMode.generate(inputArgumentsOptions.count, inputArgumentsOptions.output);
+            await generateMode.generateData(inputArgumentsOptions.count, inputArgumentsOptions.output);
             break;
     }
 };

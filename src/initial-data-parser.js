@@ -1,12 +1,12 @@
 function sortFileData(array) {
     let sortedData = array.sort((a, b) => (+a.age < +b.age) || (a.name < b.name) ? 1 : -1); // Sort by age and name
     return sortedData
-}
+};
 
 function getOldestUser(data) {
     let oldestPerson = data.sort((a, b) => (+a.age < +b.age) ? 1 : -1); // Sort by age 
     console.log(`The oldest person is ${oldestPerson[0].name}, age : ${oldestPerson[0].age}`);
-}
+};
 
 function getPopularLastName(array) {
     let arrayOfLastName = [];
