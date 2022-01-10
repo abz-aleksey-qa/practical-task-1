@@ -28,8 +28,7 @@ npm install
 | --output | -o  | Name for output file. If this parameter not specified, in Read Mode the file format is substituted from the input file. If in Generate Mode do not specify this parameter, dedault parametr will be json. 
 | --help | -h | Display info for CLI parameters.
 
-By default without any CLI parameters, utility work in generate node with default value in counter.
-The output files are saved in the ./output-files folder after the utility works. Before you start, the utility automatically deletes all files in the folder. 
+By default without any CLI parameters, utility work in generate node with default value in counter. 
 ## Example valid files
 
 1. json - https://scr.abz.agency/xQuz4XqO
@@ -37,7 +36,9 @@ The output files are saved in the ./output-files folder after the utility works.
 
 ## Run utility (examples)
 
-> Note:  Output files saved in folde `output-files`
+> Note:  Output files saved in folder  `./output-files`.
+
+> After running, the utility automatically deletes all files from the output folder. 
 
 Read mode : 
 
