@@ -29,6 +29,7 @@ npm install
 | --help | -h | Display info for CLI parameters.
 
 By default without any CLI parameters, utility work in generate node with default value in counter.
+The output files are saved in the ./output-files folder after the utility works. Before you start, the utility automatically deletes all files in the folder. 
 ## Example valid files
 
 1. json - https://scr.abz.agency/xQuz4XqO

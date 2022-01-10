@@ -6,8 +6,7 @@ const generateMode = require('./src/data-generator');
 const directory = require('./src/utils/remove-files');
 
 async function detectMode() {
-
-    directory.removeFiles('./output-files/');
+    directory.removeFiles('./output-files');
 
     const inputArgumentsOptions = cli.parserInputCliData(process.argv)
     const mode = cliValidator.getArguments(inputArgumentsOptions);
