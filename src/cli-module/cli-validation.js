@@ -1,4 +1,3 @@
-const { throws } = require('assert');
 const path = require('path');
 
 const mode = {
