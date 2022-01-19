@@ -15,9 +15,4 @@ describe('TS №2 :File validation', async function () {
     const isFilesSame = testUtils.compareFiles(testData.PATH_FOR_VALID_INPUT_FILE_CSV, testData.PATH_FOR_OUT_TEST_FILE_CSV);
     assert.equal(isFilesSame, true, 'ERROR');
   });
-
-  it('TC №2.3 : Check output file json for Generate Mode', async () => {
-    const fileInfo = fs.statSync(testData.PATH_FOR_OUT_TEST_FILE_GENERATE_JSON);
-    assert.notEqual(fileInfo.size, 0, 'ERROR');
-  });
 });

@@ -1,9 +1,10 @@
 const csvValidator = require('csv-file-validator');
 const fs = require('fs');
 const Ajv = require('ajv');
+const path = require('path');
+const newError = require('../utils/throw-error');
 
 const ajv = new Ajv();
-const path = require('path');
 
 const schemaJson = {
   type: 'array',
@@ -77,7 +78,8 @@ async function csvValidation(file) {
   if (isValidFile) {
     return true;
   }
-  throw Error(`ERROR : Ivalid CSV file : ${validationResult.inValidMessages}`);
+
+  newError.throwError(`Ivalid CSV file : ${validationResult.inValidMessages}`);
 }
 
 function inputFileValidation(filePath) {
@@ -89,7 +91,6 @@ function inputFileValidation(filePath) {
   if (fileFormat === '.csv') {
     return csvValidation(filePath);
   }
-
   throw Error('Incorrect format of input file');
 }
 

@@ -1,15 +1,23 @@
 const assert = require('assert');
 const util = require('util');
 const execFile = util.promisify(require('child_process').exec);
+const fs = require('fs');
 const testData = require('./test-data/test-data');
 const directory = require('../src/utils/remove-files');
+
+const outDir = './output-files';
 
 describe('TS №1 : Cli Validation', async function () {
   this.timeout(5000);
 
   before(() => {
     directory.removeFiles('./tests/output-test-artifacts/');
-    directory.removeFiles('./output-files');
+
+    if (!fs.existsSync(outDir)) {
+      fs.mkdirSync(outDir);
+    } else {
+      directory.removeFiles(outDir);
+    }
   });
 
   it('TC №1.1 : Read mode with --input and --output parameter [JSON]', async () => {
@@ -32,12 +40,7 @@ describe('TS №1 : Cli Validation', async function () {
     assert.equal(stdout, testData.VALID_CONSOLE_MESSAGE_CSV, 'ERROR : Messages not equal');
   });
 
-  it('TC №1.5 : Generate mode with --count and -output parameter', async () => {
-    const { stderr } = await execFile(`node app.js --count 10 --output ${testData.PATH_FOR_OUT_TEST_FILE_GENERATE_JSON}`);
-    assert.equal(stderr.length, 0);
-  });
-
-  it('TC №1.6 : Generate mode with --count ', async () => {
+  it('TC №1.5 : Generate mode with --count ', async () => {
     const { stderr } = await execFile('node app.js --count 10');
     assert.equal(stderr.length, 0);
   });

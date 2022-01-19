@@ -1,3 +1,5 @@
 /node_modules
 /test-changes.js
+/.vscode
+/output-files
 *.DS_Store

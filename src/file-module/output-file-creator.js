@@ -36,12 +36,12 @@ async function createOutputFileForGenerateData(outArguments, arrayData) {
   }
 
   if (outputPath === '.json') {
-    const createGenerateFile = fs.createWriteStream(`${outArguments}`);
+    const createGenerateFile = fs.createWriteStream(`./output-files/${outArguments}`);
     createGenerateFile.write(JSON.stringify(arrayData, null, 2));
   }
 
   if (outputPath === '.csv') {
-    const writeStream = fs.createWriteStream(`${outArguments}`);
+    const writeStream = fs.createWriteStream(`./output-files/${outArguments}`);
     parser.write(arrayData, { headers: true })
       .pipe(writeStream);
   }

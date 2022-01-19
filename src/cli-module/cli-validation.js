@@ -1,8 +1,8 @@
 const path = require('path');
 
-const mode = {
-    MODE_READ: 'Read Mode',
-    MODE_GENERATE: 'Generate Mode',
+const inputData = {
+    INPUT_FILE_PATH: 0,
+    OUTPUT_FILE_PATH: 0,
 };
 
 function getArguments(arguments) {
@@ -18,29 +18,13 @@ function getArguments(arguments) {
         outFile = validationOutPutFile(arguments.output)
     };
 
-    return detectMode(inputFile, outFile, count)
-}
-
-function detectMode(inputFile, ouputFile, counter) {
-
-    if ((inputFile && ouputFile) || (inputFile && !counter)) {
-        return mode.MODE_READ
-    }
-
-    if ((counter && ouputFile) || (counter && !inputFile)) {
-        return mode.MODE_GENERATE
-    }
-
-    if (counter && inputFile) {
-        throw Error('ERROR : Invalid mode. Check --help')
-    }
-
-    return mode.MODE_GENERATE;
+return true
 }
 
 function validationInputFile(inputFile) {
     let inputFormat = path.extname(inputFile);
     if (inputFormat === '.json' || inputFormat === '.csv') {
+        inputData.INPUT_FILE_PATH = inputFormat
         return true
     } else {
         throw Error('ERROR : Format of input file must be .json or .csv')
@@ -50,6 +34,7 @@ function validationInputFile(inputFile) {
 function validationOutPutFile(outputFile) {
     let outputFormat = path.extname(outputFile);
     if (outputFormat === '.json' || outputFormat === '.csv') {
+        inputData.OUTPUT_FILE_PATH = outputFormat
         return true
     } else {
         throw Error('ERROR : Format of output file must be .json or .csv')
@@ -65,6 +50,6 @@ function validationCounterArgument(counter) {
 };
 
 module.exports = {
-    mode,
+    inputData,
     getArguments
 };

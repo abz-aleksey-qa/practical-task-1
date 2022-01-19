@@ -1,14 +1,9 @@
-function sortFileData(array) {
-  const sortedData = array.sort((a, b) => ((+a.age < +b.age) || (a.name < b.name) ? 1 : -1));
-  return sortedData;
-}
-
 function getOldestUser(data) {
   const oldestPerson = data.sort((a, b) => ((+a.age < +b.age) ? 1 : -1)); // Sort by age
-  console.log(`The oldest person is ${oldestPerson[0].name}, age : ${oldestPerson[0].age}`);
+  return `The oldest person is ${oldestPerson[0].name}, age : ${oldestPerson[0].age}`;
 }
 
-function getPopularLastName(array) {
+function getMostPopularLastName(array) {
   const arrayOfLastName = [];
   for (user of array) {
     const fullname = user.name.split(' ');
@@ -26,11 +21,10 @@ function getPopularLastName(array) {
   }
 
   const popularLastname = Object.keys(lastNameCounter).find((key) => lastNameCounter[key] === lastnameMaxCount);
-  return console.log(`The most popular lastname is  ${popularLastname}, count ${lastnameMaxCount}`);
+  return `The most popular lastname is  ${popularLastname}, count ${lastnameMaxCount}`;
 }
 
 module.exports = {
-  sortFileData,
-  getPopularLastName,
   getOldestUser,
+  getMostPopularLastName,
 };
