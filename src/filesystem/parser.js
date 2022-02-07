@@ -3,13 +3,13 @@ const parser = require('fast-csv');
 const path = require('path');
 const newError = require('../utils/throw-error');
 
-async function inputFilePareser(inputFilePath) {
-  const extNameInputFile = path.extname(inputFilePath);
+async function parseFile(filePath) {
+  const extNameInputFile = path.extname(filePath);
 
   if (extNameInputFile === '.csv') {
     const parseData = await new Promise((resolve) => {
       const results = [];
-      fs.createReadStream(inputFilePath)
+      fs.createReadStream(filePath)
         .pipe(parser.parse({ headers: true }))
         .on('error', (error) => newError.throwError(error))
         .on('data', (row) => results.push(row))
@@ -20,7 +20,7 @@ async function inputFilePareser(inputFilePath) {
 
   if (extNameInputFile === '.json') {
     try {
-      const parseData = JSON.parse(fs.readFileSync(inputFilePath, 'utf-8'));
+      const parseData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
       return parseData;
     } catch (error) {
       newError.throwError(error);
@@ -31,5 +31,5 @@ async function inputFilePareser(inputFilePath) {
 }
 
 module.exports = {
-  inputFilePareser,
+  parseFile,
 };

@@ -1,3 +1,12 @@
+const filterMessage = {
+  popularLastNameMessage: 0,
+  oldestUserMessage: 0,
+};
+
+function sortInputData(array) {
+  return array.sort((a, b) => ((+a.age < +b.age) || (a.name < b.name) ? 1 : -1));
+}
+
 function getOldestUser(data) {
   const oldestPerson = data.sort((a, b) => ((+a.age < +b.age) ? 1 : -1)); // Sort by age
   return `The oldest person is ${oldestPerson[0].name}, age : ${oldestPerson[0].age}`;
@@ -24,7 +33,18 @@ function getMostPopularLastName(array) {
   return `The most popular lastname is  ${popularLastname}, count ${lastnameMaxCount}`;
 }
 
+function dataSorting(data) {
+  const sortedData = sortInputData(data);
+  const filterOldestUser = getOldestUser(sortedData);
+  const filterPopularLastname = getMostPopularLastName(data);
+
+  filterMessage.oldestUserMessage = filterOldestUser;
+  filterMessage.popularLastNameMessage = filterPopularLastname;
+
+  return sortedData;
+}
+
 module.exports = {
-  getOldestUser,
-  getMostPopularLastName,
+  dataSorting,
+  filterMessage,
 };

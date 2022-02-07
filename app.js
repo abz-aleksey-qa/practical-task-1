@@ -1,15 +1,12 @@
 const fs = require('fs');
-const cli = require('./src/cli-module/cli-parser');
-const cliValidator = require('./src/cli-module/cli-validation');
-const fileValidator = require('./src/file-module/input-file-validation');
-const fileParser = require('./src/file-module/input-file-parser');
-const dataSorting = require('./src/data-module/input-data-sorting');
-const dataFilter = require('./src/data-module/data-filter');
-const createOutFile = require('./src/file-module/output-file-creator');
-const detectMode = require('./src/detect-mode');
-const newError = require('./src/utils/throw-error');
-const dataGenerator = require('./src/data-module/data-generator');
-const consoleOut = require('./src/console-output');
+const path = require('path');
+const cliParser = require('./src/cli/parser');
+const cliValidator = require('./src/cli/validation');
+const dataFilter = require('./src/data/filtration');
+const modedDefinition = require('./src/modes/mode-definition');
+const fileWriter = require('./src/filesystem/file-creator');
+const dataLogger = require('./src/data/logger');
+const formatter = require('./src/data/formatter');
 
 const outDir = './output-files';
 
@@ -18,40 +15,16 @@ if (!fs.existsSync(outDir)) {
 }
 
 async function runApp() {
-  const inputCliArguments = cli.parserInputCliData(process.argv);
-
-  const isCliParametrsValid = cliValidator.getArguments(inputCliArguments);
-
-  if (isCliParametrsValid) {
-    const appMode = detectMode.detectMode(inputCliArguments.input, inputCliArguments.output, inputCliArguments.count);
-
-    if (appMode === detectMode.mode.MODE_READ) {
-      const isInputFileValid = fileValidator.inputFileValidation(inputCliArguments.input);
-
-      const parseInputFile = (isInputFileValid) ? await fileParser.inputFilePareser(inputCliArguments.input) : newError.throwError('Input file invalid!');
-      const sortedData = dataSorting.sortInputData(parseInputFile);
-
-      const getOldestUser = dataFilter.getOldestUser(sortedData);
-      const getPopularLastName = dataFilter.getMostPopularLastName(sortedData);
-
-      createOutFile.createOuptuFileforInputData(sortedData, cliValidator.inputData.INPUT_FILE_PATH, inputCliArguments.output);
-
-      consoleOut.consoleOutputData(appMode, getOldestUser, getPopularLastName);
-    }
-
-    if (appMode === detectMode.mode.MODE_GENERATE) {
-      const generateData = await dataGenerator.generateData(inputCliArguments.count);
-      const sortedData = dataSorting.sortInputData(generateData);
-
-      const getOldestUser = dataFilter.getOldestUser(sortedData);
-      const getPopularLastName = dataFilter.getMostPopularLastName(sortedData);
-
-      createOutFile.createOutputFileForGenerateData(inputCliArguments.output, sortedData);
-
-      consoleOut.consoleOutputData(appMode, getOldestUser, getPopularLastName);
-    }
+  const inputCliArguments = cliParser.parserInputCliData(process.argv);
+  const isCliParametrsValid = cliValidator.validateCliInputArguments(inputCliArguments);
+  if (!isCliParametrsValid) {
+    throw Error(`${cliValidator.getErrors.message}`);
   } else {
-    newError.throwError('Cli parameters invalid!');
+    const parsedData = await modedDefinition.modeSelection(inputCliArguments.input, inputCliArguments.count);
+    const sortedData = dataFilter.dataSorting(parsedData);
+    const formattedData = await formatter.dataFormatter(path.extname(inputCliArguments.output))(sortedData);
+    fileWriter.writeFile(formattedData, inputCliArguments.output);
+    dataLogger.consoleLogData(dataFilter.filterMessage);
   }
 }
 
