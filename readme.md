@@ -24,8 +24,9 @@ npm install
 | Option | Short type | by Defualt | Description |
 | - | - | - | - |
 | --input | -i | false | Path for input file.
-| --count | -c | 10 | The numeric value of the number of records in the output file. The default is 10. (not compatible with the --count parameter)
-| --output | -o  | output-file.json | The name of the output file. The file is saved in the /output-files folder. (If no output parameter is specified for the specified source file, the output file will be written in the format of the input.)
+| --count | -c | 10 | The numeric value of the number of records in the output file (not compatible with the --count parameter)
+| --output | -o  | output-file.json | The name of the output file. The file is saved in the /output-files folder.
+| --help | -h | false |  Display info for CLI parameters.
 
 
 By default without any CLI parameters, utility work in generate node with default value in counter. 
