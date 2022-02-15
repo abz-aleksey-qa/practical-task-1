@@ -1,4 +1,4 @@
-const schemaJson = {
+const jsonSchema = {
   type: 'array',
   items: {
     type: 'object',
@@ -25,7 +25,7 @@ const schemaJson = {
   },
 };
 
-const congifCsv = {
+const csvConfiguration = {
   headers: [
     {
       name: 'name',
@@ -50,4 +50,4 @@ const congifCsv = {
   ],
 };
 
-module.exports = { schemaJson, congifCsv };
+module.exports = { jsonSchema, csvConfiguration };

@@ -1,48 +1,44 @@
 const csvValidator = require('csv-file-validator');
-const fs = require('fs');
 const Ajv = require('ajv');
 const fileConfig = require('../configuration/validation-schemes');
 
 const ajv = new Ajv();
 
-const getErrors = {
+const errorMessages = {
   message: false,
 };
 
-function jsonValidation(filePath) {
-  const currentFile = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-  const validate = ajv.compile(fileConfig.schemaJson);
-  const valid = validate(currentFile);
+function validateJsonData(fileData) {
+  const validate = ajv.compile(fileConfig.jsonSchema);
+  const valid = validate(JSON.parse(fileData));
 
   if (valid) {
     return true;
   }
-  getErrors.message = `Validation error for json schema : ${validate.errors[0].message}`;
+  errorMessages.message = `Validation error for json schema : ${validate.errors[0].message}`;
   return false;
 }
 
-async function csvValidation(filePath) {
-  const csvfile = fs.readFileSync(filePath, 'utf-8');
-
-  const validationResult = await csvValidator(csvfile, fileConfig.congifCsv);
+async function validateCsvData(fileData) {
+  const validationResult = await csvValidator(fileData, fileConfig.csvConfiguration);
   const isValidFile = validationResult.inValidMessages.length === 0;
 
   if (isValidFile) {
     return true;
   }
-  getErrors.message = `Ivalid CSV file : ${validationResult.inValidMessages}`;
+  errorMessages.message = `Ivalid CSV file : ${validationResult.inValidMessages}`;
   return false;
 }
 
-function inputFileValidation(extName) {
+function validateData(extension) {
   const formats = {
-    '.csv': csvValidation,
-    '.json': jsonValidation,
+    '.csv': validateCsvData,
+    '.json': validateJsonData,
   };
-  return formats[extName];
+  return formats[extension];
 }
 
 module.exports = {
-  inputFileValidation,
-  getErrors,
+  validateData,
+  errorMessages,
 };

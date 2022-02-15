@@ -1,60 +1,41 @@
 const path = require('path');
 
-let getErrors = {
-    message: false
-};
-
-function validateCliInputArguments(arguments) {
-
-    let inputArg, outputArg, countArg;
-  
-    if ('count' in arguments) {
-        countArg = validationCliCountArgument(arguments.count)
-    }
-    if ('input' in arguments) {
-        inputArg = validateCliInputFileArguments(arguments.input)
-    }
-    if ('output' in arguments) {
-        outputArg = validateCliOutputArgument(arguments.output)
-    };
-
-    if (getErrors.message) {
-        return false
-    } else {
-        return true
-    }
+function isArgumentsValid(arguments) {
+    return getArgumentsErrors(arguments).length === 0;
 }
 
-function validateCliInputFileArguments(inputFile) {
-    let inputFormat = path.extname(inputFile);
-    if (inputFormat === '.json' || inputFormat === '.csv') {
-        return true
-    } else {
-        getErrors.message = 'ERROR : Format of input file must be .json or .csv'
-        return false
-    }
-};
+function getArgumentsErrors(arguments) {
 
-function validateCliOutputArgument(outputFile) {
-    let outputFormat = path.extname(outputFile);
-    if (outputFormat === '.json' || outputFormat === '.csv') {
-        return true
-    } else {
-        getErrors.message = 'ERROR : Format of output file must be .json or .csv'
-        return false
-    }
-};
+    const errors = [];
 
-function validationCliCountArgument(counter) {
-    if (!isNaN(counter) && +counter !== 0) {
-        return true
-    } else {
-        getErrors.message = 'ERROR : Counter type must be a number and more then 0!'
-        return false
+    if ('count' in arguments && !validateCount(+arguments.count)) {
+        errors.push('Counter type must be a number and more then 0!')
     }
-};
+
+    if ('input' in arguments && !validateInputFilepath(arguments.input)) {
+        errors.push('Format of input file must be .json or .csv')
+    }
+    if ('output' in arguments && !validateOutputFilepath(arguments.output)) {
+        errors.push('Format of output file must be .json or .csv')
+    }
+
+    return errors;
+}
+function validateInputFilepath(inputFile) {
+    let extension = path.extname(inputFile);
+    return extension === '.json' || extension === '.csv';
+}
+
+function validateOutputFilepath(outputFile) {
+    let extension = path.extname(outputFile);
+    return extension === '.json' || extension === '.csv';
+}
+
+function validateCount(counter) {
+    return Number.isInteger(counter) && counter !== 0;
+}
 
 module.exports = {
-    getErrors,
-    validateCliInputArguments
+    isArgumentsValid,
+    getArgumentsErrors
 };

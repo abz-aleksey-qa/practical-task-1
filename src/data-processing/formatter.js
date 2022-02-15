@@ -1,21 +1,21 @@
 const parser = require('fast-csv');
 
-function jsonFormatter(data) {
+function formatInJson(data) {
   return JSON.stringify(data, null, 2);
 }
 
-async function csvFormatter(data) {
+async function formatInCsv(data) {
   return parser.writeToString(data, { headers: true });
 }
 
-function dataFormatter(extensionFormat) {
+function getFormattedData(extensionFormat) {
   const formatters = {
-    '.csv': csvFormatter,
-    '.json': jsonFormatter,
+    '.csv': formatInCsv,
+    '.json': formatInJson,
   };
   return formatters[extensionFormat];
 }
 
 module.exports = {
-  dataFormatter,
+  getFormattedData,
 };

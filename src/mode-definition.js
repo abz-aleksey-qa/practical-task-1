@@ -1,13 +1,13 @@
 const startApplication = require('./start-operating-mode');
 
-async function modeSelection(inputValue, countValue) {
+async function selectMode(inputValue, countValue) {
   if (inputValue && !countValue) {
-    const parsedData = await startApplication.launchApplicationMode('input-data')(inputValue);
+    const parsedData = await startApplication.launchApplicationMode('input')(inputValue);
     return parsedData;
   }
 
   if ((countValue && !inputValue) || (!inputValue && !countValue)) {
-    const parsedData = await startApplication.launchApplicationMode('generate-data')(countValue);
+    const parsedData = await startApplication.launchApplicationMode('generate')(countValue);
     return parsedData;
   }
 
@@ -15,5 +15,5 @@ async function modeSelection(inputValue, countValue) {
 }
 
 module.exports = {
-  modeSelection,
+  selectMode,
 };

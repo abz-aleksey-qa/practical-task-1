@@ -5,7 +5,7 @@ function consoleLogData(object) {
     if (typeof (item) === 'string') {
       console.log(item);
     } else {
-      throw new Error(`Data for log is not a string : ${item}`);
+      throw Error(`Data for log is not a string : ${item}`);
     }
   });
 }
